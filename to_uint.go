@@ -12,7 +12,7 @@ import (
 var DefaultUintOptions = Options{
 	Float:       ToForceCast,
 	EmptyString: ToDefaultZeroValue,
-	Nil:         NilRuleToZeroValue,
+	Nil:         NilToZeroValue,
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -25,9 +25,9 @@ func ToUnsignedE[T constraints.Unsigned](value any, options ...Options) (T, erro
 	switch _type := value.(type) {
 	case nil:
 		switch options[0].Nil {
-		case NilRuleToZeroValue:
+		case NilToZeroValue:
 			return zero, nil
-		case NilRuleToError:
+		case NilToError:
 			return zero, fmt.Errorf("unable to cast nil of type %T to %T", value, zero)
 		}
 	case string:

@@ -14,11 +14,29 @@ func toFloatE[T constraints.Float](value any, options ...Options) (T, error) {
 	var zero T
 	value = indirect(value)
 	switch _type := value.(type) {
-	case float32, float64:
+	case float32:
 		return T(_type), nil
-	case int, int8, int16, int32, int64:
+	case float64:
 		return T(_type), nil
-	case uint, uint8, uint16, uint32, uint64:
+	case int:
+		return T(_type), nil
+	case int8:
+		return T(_type), nil
+	case int16:
+		return T(_type), nil
+	case int32:
+		return T(_type), nil
+	case int64:
+		return T(_type), nil
+	case uint:
+		return T(_type), nil
+	case uint8:
+		return T(_type), nil
+	case uint16:
+		return T(_type), nil
+	case uint32:
+		return T(_type), nil
+	case uint64:
 		return T(_type), nil
 	case string:
 		if _type == "" {
@@ -49,9 +67,9 @@ func toFloatE[T constraints.Float](value any, options ...Options) (T, error) {
 		return 0, nil
 	case nil:
 		switch options[0].Nil {
-		case NilRuleToZeroValue:
+		case NilToZeroValue:
 			return zero, nil
-		case NilRuleToError:
+		case NilToError:
 			return zero, fmt.Errorf("unable to cast %#v of type %T to %T", value, value, zero)
 		}
 	}

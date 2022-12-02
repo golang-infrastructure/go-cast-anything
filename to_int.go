@@ -15,11 +15,29 @@ func toSignedE[T constraints.Signed](value any, options ...Options) (T, error) {
 	var zero T
 	value = indirect(value)
 	switch _type := value.(type) {
-	case int, int8, int16, int32, int64:
+	case float32:
 		return T(_type), nil
-	case uint, uint8, uint16, uint32, uint64:
+	case float64:
 		return T(_type), nil
-	case float64, float32:
+	case int:
+		return T(_type), nil
+	case int8:
+		return T(_type), nil
+	case int16:
+		return T(_type), nil
+	case int32:
+		return T(_type), nil
+	case int64:
+		return T(_type), nil
+	case uint:
+		return T(_type), nil
+	case uint8:
+		return T(_type), nil
+	case uint16:
+		return T(_type), nil
+	case uint32:
+		return T(_type), nil
+	case uint64:
 		return T(_type), nil
 	case string:
 		if _type == "" {
@@ -53,9 +71,9 @@ func toSignedE[T constraints.Signed](value any, options ...Options) (T, error) {
 		return T(_type), nil
 	case nil:
 		switch options[0].Nil {
-		case NilRuleToZeroValue:
+		case NilToZeroValue:
 			return zero, nil
-		case NilRuleToError:
+		case NilToError:
 			return zero, fmt.Errorf("unable to cast %#v of type %T to %T", value, value, zero)
 		}
 	}
@@ -83,3 +101,22 @@ func ToIntOrDefault(value any, defaultValue int) int {
 }
 
 // ------------------------------------------------ ---------------------------------------------------------------------
+
+func trimZeroDecimal(s string) string {
+	var foundZero bool
+	for i := len(s); i > 0; i-- {
+		switch s[i-1] {
+		case '.':
+			if foundZero {
+				return s[:i-1]
+			}
+		case '0':
+			foundZero = true
+		default:
+			return s
+		}
+	}
+	return s
+}
+
+// ------------------------------------------------- --------------------------------------------------------------------

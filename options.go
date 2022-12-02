@@ -2,12 +2,12 @@ package cast_anything
 
 // ------------------------------------------------ ---------------------------------------------------------------------
 
-type ValueProcessRule int
+type ValueCastRule int
 
 const (
 
 	// ToDefaultZeroValue 转换为对应类型默认的零值
-	ToDefaultZeroValue ValueProcessRule = iota
+	ToDefaultZeroValue ValueCastRule = iota
 
 	// ToForceCast 做一个强制类型转换
 	ToForceCast
@@ -18,26 +18,26 @@ const (
 
 // ------------------------------------------------ Nil ----------------------------------------------------------------
 
-// NilRule nil值应该如何转换
-type NilRule = int
+// NilCastRule nil值应该如何转换
+type NilCastRule = int
 
 const (
 
-	// NilRuleToZeroValue 转换为对应类型的零值
-	NilRuleToZeroValue NilRule = iota
+	// NilToZeroValue 转换为对应类型的零值
+	NilToZeroValue NilCastRule = iota
 
-	// NilRuleToError 直接返回错误
-	NilRuleToError
+	// NilToError 直接返回错误
+	NilToError
 )
 
-// ------------------------------------------------ NegativeSignedToUnsignedRule ---------------------------------------
+// ------------------------------------------------ NegativeSignedToUnsignedCastRule ---------------------------------------
 
-type NegativeSignedToUnsignedRule int
+type NegativeSignedToUnsignedCastRule int
 
 const (
 
 	// NegativeSignedToUnsignedRuleToZero 转换为零值
-	NegativeSignedToUnsignedRuleToZero NegativeSignedToUnsignedRule = iota
+	NegativeSignedToUnsignedRuleToZero NegativeSignedToUnsignedCastRule = iota
 
 	// NegativeSignedToUnsignedRuleAbs 转换为绝对值
 	NegativeSignedToUnsignedRuleAbs
@@ -51,16 +51,16 @@ const (
 type Options struct {
 
 	// 如果被转换的类型是float类型时如何处理
-	Float ValueProcessRule
+	Float ValueCastRule
 
 	// 如果被转换的类型是空字符串时如何处理
-	EmptyString ValueProcessRule
+	EmptyString ValueCastRule
 
 	// 如果被转换的类型是nil时如何处理
-	Nil NilRule
+	Nil NilCastRule
 
 	// 有符号类型的负数向无符号类型转换时应该如何处理
-	NegativeSignedToUnsigned NegativeSignedToUnsignedRule
+	NegativeSignedToUnsigned NegativeSignedToUnsignedCastRule
 }
 
 // ------------------------------------------------ ---------------------------------------------------------------------
