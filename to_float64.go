@@ -3,14 +3,14 @@ package cast_anything
 import (
 	"encoding/json"
 	"fmt"
-	"golang.org/x/exp/constraints"
+	"github.com/golang-infrastructure/go-gtypes"
 	"strconv"
 )
 
 // ------------------------------------------------ ---------------------------------------------------------------------
 
 // 转换为浮点类型
-func toFloatE[T constraints.Float](value any, options ...Options) (T, error) {
+func toFloatE[T gtypes.Float](value any, options ...Options) (T, error) {
 	var zero T
 	value = indirect(value)
 	switch _type := value.(type) {

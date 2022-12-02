@@ -3,7 +3,7 @@ package cast_anything
 import (
 	"encoding/json"
 	"fmt"
-	"golang.org/x/exp/constraints"
+	"github.com/golang-infrastructure/go-gtypes"
 	"strconv"
 )
 
@@ -18,7 +18,7 @@ var DefaultUintOptions = Options{
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ToUnsignedE 把目标转换为无符号类型
-func ToUnsignedE[T constraints.Unsigned](value any, options ...Options) (T, error) {
+func ToUnsignedE[T gtypes.Unsigned](value any, options ...Options) (T, error) {
 	var zero T
 	options = append(options, DefaultUintOptions)
 	value = indirect(value)
@@ -83,7 +83,7 @@ func ToUnsignedE[T constraints.Unsigned](value any, options ...Options) (T, erro
 }
 
 // 有符号类型向无符号类型转换的时候都要经过这个检查，看看数据范围是否合法，主要是进行一个符号的数据范围检查
-func signedCheck[Source constraints.Signed | constraints.Float, Target constraints.Unsigned](source Source) (Target, error) {
+func signedCheck[Source gtypes.Signed | gtypes.Float, Target gtypes.Unsigned](source Source) (Target, error) {
 	if source < 0 {
 		return 0, fmt.Errorf("unable to cast negative value")
 	} else {
